@@ -1,10 +1,9 @@
 from tkinter import Frame, Label, Button, W, E
 
 class GameView(Frame):
-  def __init__(self, main_view, root):
-    Frame.__init__(self, root)
+  def __init__(self, main_view, container):
+    Frame.__init__(self, container)
 
-    self.root = root
     self.main_view = main_view
 
     self.draw_header()
@@ -25,6 +24,7 @@ class GameView(Frame):
   def draw_board(self):
     self.board = {
       'container': None,
+      'buttons': {}
     }
 
     self.board['container'] = Frame(self)
@@ -32,13 +32,16 @@ class GameView(Frame):
 
     for button_number in range(9):
       button_name = 'button' + str(button_number)
+      
+      row = int(button_number / 3)
+      column = button_number % 3
 
-      self.board[button_name] = Button(
-      self.board['container'],
+      self.board['buttons'][button_name] = Button(
+        self.board['container'],
         width=10,
         height=5,
       )
-      self.board[button_name].grid(row=int(button_number / 3), column=button_number % 3)
+      self.board['buttons'][button_name].grid(row=row, column=column)
 
   def draw_footer(self):
     self.footer = {
@@ -52,10 +55,6 @@ class GameView(Frame):
     self.footer['container'],
       width=20,
       text="Empatar",
-      command=self.no_winner
+      command=self.main_view.no_winner
     )
     self.footer['button'].grid(row=3, column=1)
-
-  def no_winner(self):
-    self.main_view.show_messagebox(title="Empatou o jogo!", message="O jogo ficou empatado e não teve um ganhador!")
-    self.main_view.open_view('home')

@@ -4,6 +4,10 @@ class HomeView(Frame):
   def __init__(self, main_view, root):
     Frame.__init__(self, root)
 
+    self.NUMBER_PLAYERS = 4
+    self.BASE_NAME_PLAYER = 'Jogador'
+    self.BASE_NAME_PLAYER_SYMBOLS = ['X', 'O', '$', '@']
+
     self.root = root
     self.main_view = main_view
 
@@ -24,42 +28,42 @@ class HomeView(Frame):
   def draw_form(self):
     self.form = {
       'container': None,
-      'player1': {
-        'label': None,
-        'value': None,
-      },
-      'player2': {
-        'label': None,
-        'value': None,
-      },
+      'players': {},
       'button': None
     }
 
     self.form['container'] = Frame(self)
     self.form['container'].grid()
-    self.form['player1']['label'] = Label(self.form['container'], text='Jogador 1: ')
-    self.form['player1']['label'] .grid(row=1, column=0, sticky=W+E)
-    self.form['player1']['value'] = Entry(self.form['container'])
-    self.form['player1']['value'].grid(row=1, column=1, sticky=W+E)
 
-    self.form['player2']['label'] = Label(self.form['container'], text='Jogador 2: ')
-    self.form['player2']['label'] .grid(row=2, column=0, sticky=W+E)
-    self.form['player2']['value'] = Entry(self.form['container'])
-    self.form['player2']['value'].grid(row=2, column=1, sticky=W+E)
-    
+    for count in range(self.NUMBER_PLAYERS):
+      player_number = count + 1
+      player_dict_key = f'player_{player_number}'
+
+      self.form['players'][player_dict_key] = { 'label': None, 'entry': None }
+
+      self.form['players'][player_dict_key]['label'] = Label(self.form['container'], text=f'Jogador {player_number}: ')
+      self.form['players'][player_dict_key]['label'].grid(row=player_number, column=0, sticky=W+E)
+
+      self.form['players'][player_dict_key]['entry'] = Entry(self.form['container'])
+      self.form['players'][player_dict_key]['entry'].grid(row=player_number, column=1, sticky=W+E)
+
     self.form['button'] = Button(
       self.form['container'],
       width=20,
       text="Jogar",
-      command=self.valid_form
+      command=self.main_view.start_game
     )
-    self.form['button'].grid(row=3, column=1)
+    self.form['button'].grid(row=self.NUMBER_PLAYERS + 1, column=1)
     
-  def valid_form(self):
-    player1 = self.form['player1']['value'].get()
-    player2 = self.form['player1']['value'].get()
+  def get_players(self):
+    players = {}
 
-    if((not player1) or (not player2)):
-      self.main_view.show_messagebox(message="Preencha os nomes dos jogadores", title="Encontramos um erro")
-    else:
-      self.main_view.open_view('game')
+    for count in range(self.NUMBER_PLAYERS):
+      player_dict_key = f'player_{count + 1}'
+
+      players[player_dict_key] = self.form['players'][player_dict_key]['entry'].get()
+
+      if(not players[player_dict_key]):
+        players[player_dict_key] = f'{self.BASE_NAME_PLAYER} {self.BASE_NAME_PLAYER_SYMBOLS[count]}'
+    
+    return players
