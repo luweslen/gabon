@@ -4,7 +4,7 @@ class HomeView(Frame):
   def __init__(self, main_view, root):
     Frame.__init__(self, root)
 
-    self.NUMBER_PLAYERS = 4
+    self.NUMBER_PLAYERS = 2
     self.BASE_NAME_PLAYER = 'Jogador'
     self.BASE_NAME_PLAYER_SYMBOLS = ['X', 'O', '$', '@']
 
