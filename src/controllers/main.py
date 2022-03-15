@@ -1,3 +1,5 @@
+from models.chain_of_responsibility.main import ChainOfResponsibility
+
 class MainController:
   def __init__(self, view):
     self.view = view
