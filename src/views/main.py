@@ -57,6 +57,7 @@ class MainView():
   def winner(self, winner):
     self.controllers['ranking'].update_player(winner)
     self.show_messagebox(f'O ganhador foi o jogador {winner}')
+    self.set_ranking()
 
   def open_view(self, name_view='home'):
     self.views[name_view].tkraise()
@@ -66,6 +67,10 @@ class MainView():
 
   def click_position(self, position):
     self.controllers['game'].click_position(position)
+
+  def set_ranking(self):
+    ranking = self.get_ranking()
+    self.views['home'].set_ranking(ranking)
 
   def get_ranking(self):
     ranking = self.controllers['ranking'].get_players()
