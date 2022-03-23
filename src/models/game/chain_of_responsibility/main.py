@@ -1,10 +1,10 @@
-from move import Move
+from models.game.move import Move
 
-from responsabilities.define_player import DefinePlayer
-from responsabilities.validity import Validity
-from responsabilities.execute_move import ExecuteMove
-from responsabilities.winner import Winner
-from responsabilities.no_winner import NoWinner
+from models.game.chain_of_responsibility.responsabilities.define_player import DefinePlayer
+from models.game.chain_of_responsibility.responsabilities.validity import Validity
+from models.game.chain_of_responsibility.responsabilities.execute_move import ExecuteMove
+from models.game.chain_of_responsibility.responsabilities.winner import Winner
+from models.game.chain_of_responsibility.responsabilities.no_winner import NoWinner
 
 class ChainOfResponsibility():
   def __init__(self):

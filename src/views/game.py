@@ -1,4 +1,5 @@
 from tkinter import Frame, Label, Button, W, E
+from functools import partial
 
 class GameView(Frame):
   def __init__(self, main_view, container):
@@ -6,11 +7,11 @@ class GameView(Frame):
 
     self.main_view = main_view
 
-    self.draw_header()
-    self.draw_board()
-    self.draw_footer()
+    self.define_header()
+    self.define_board()
+    self.define_footer()
 
-  def draw_header(self):
+  def define_header(self):
     self.header = {
       'container': None,
       'title': None
@@ -21,7 +22,7 @@ class GameView(Frame):
     self.header['title'] = Label(self.header['container'], text='O jogo começou!')
     self.header['title'].grid(row=1, column=0, columnspan=2, sticky=W+E)
   
-  def draw_board(self):
+  def define_board(self):
     self.board = {
       'container': None,
       'buttons': {}
@@ -40,10 +41,11 @@ class GameView(Frame):
         self.board['container'],
         width=10,
         height=5,
+        command=partial(self.click_position, button_number)
       )
       self.board['buttons'][button_name].grid(row=row, column=column)
 
-  def draw_footer(self):
+  def define_footer(self):
     self.footer = {
       'container': None,
       'button': None,
@@ -58,3 +60,12 @@ class GameView(Frame):
       command=self.main_view.no_winner
     )
     self.footer['button'].grid(row=3, column=1)
+
+  def draw_board(self, board):
+    for button_number in range(len(board)):
+      button_name = 'button' + str(button_number)
+      
+      self.board['buttons'][button_name]['text'] = board[button_number]
+
+  def click_position(self, position):
+    self.main_view.click_position(position)
