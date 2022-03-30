@@ -25,6 +25,6 @@ class Ranking:
     return player
 
   def get_players(self):
-    players = self.database.ranking.find().sort('wins', -1)
+    players = self.database.ranking.find({ 'nickname': { '$nin': ['Jogador O', 'Jogador X'] } }).sort('wins', -1)
 
     return list(players)
