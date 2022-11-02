@@ -22,6 +22,10 @@
 
 Gabon is a tic-tac-toe game.
 
+<div align="center">
+  <img alt="Preview" title="Preview" src="screenshots/board_view_v1.png" width="720px"/>
+</div>
+
 <a id="-technologies"></a>
 
 ## 🛠️ **Technologies**
